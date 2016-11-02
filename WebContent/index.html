@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Rest API Demo</title>
+</head>
+<body>
+<h2>Welcome to Arjun rest API demo.</h2> 
+<h3> Provide Content-type: application/json in all API calls.</h3>
+<ol>
+<li> <h5> Find all country Get method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries</li>
+<li> <h5> Find all country in xml Get method </h5> http://localhost:8080/JAXRRestCurdApi/rest/countries/xml/</li>
+<li> <h5>Insert new country Post method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries
+<h6>Request parameter :-{"id":1(Int),"countryName":" England (string)","population":10000(int)}</h6>
+</li>
+<li> <h5> Update exist record Put method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries
+<h6>Request parameter :-{"id":1(Int),"countryName":" change country (string)","population":10000 change count(int)}</h6>
+</li>
+<li> <h5>Delete old record Delete method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries/4(record id)</li>
+</ol>
+</body>
+</html>
