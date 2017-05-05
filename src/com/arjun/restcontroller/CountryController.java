@@ -1,6 +1,11 @@
 package com.arjun.restcontroller;
+/**
+ * 
+ * @author ARJUN SINGH 
+ *
+ */
 
-
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,11 +22,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.JAXBElement;
+
+import org.apache.commons.io.IOUtils;
 
 import com.arjun.bean.APIResponse;
 import com.arjun.bean.Country;
+import com.arjun.bean.ImageInfo;
+import com.arjun.bean.ImageInfoResponce;
 import com.arjun.service.CountryService;
+import com.arjun.service.ImageInfoService;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -30,8 +41,9 @@ import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/countries")
 public class CountryController {
-
+	private static final boolean IS_CHUNKED = true;
     CountryService countryService = new CountryService();
+	ImageInfoService imageInfoservice =  new ImageInfoService();
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
@@ -91,19 +103,40 @@ public class CountryController {
     @POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response uploadFile(
+	public ImageInfoResponce uploadFile(
 			@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail) {
+			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
+    	ImageInfo imageInfo = new ImageInfo();
+    	imageInfo.setIamgeId(1);
+    	byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
+    	imageInfo.setFileInput(bytes);
+    	ImageInfoResponce imageInfoResponce=	imageInfoservice.saveImage(imageInfo);
+    
+				return imageInfoResponce;
 
-		String uploadedFileLocation = "E:/arjun/image/"
+		/*String uploadedFileLocation = "E:/arjun/image/"
 				+ fileDetail.getFileName();
-
+*/
 		// save it
-		writeToFile(uploadedInputStream, uploadedFileLocation);
-
+		//writeToFile(uploadedInputStream, uploadedFileLocation);
+		/*byte[] inputFile;
+	
+		try {
+			inputFile =  IOUtils.toByteArray(uploadedInputStream);
+			byte[] base64EncodedData = Base64.encodeBase64(inputFile, IS_CHUNKED);
+			byte[] base64DcodedData=Base64.decodeBase64(base64EncodedData);
+			writeByteArraysToFile(uploadedFileLocation, base64EncodedData);
+			writeByteArraysToFile("E:/arjun/image/test/"+fileDetail.getFileName(), base64DcodedData);
+			System.out.println(base64EncodedData);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		convert base64 Decode
+		
 		String output = "File uploaded to : " + uploadedFileLocation;
 
-		return Response.status(200).entity(output).build();
+		return Response.status(200).entity(output).build();*/
 
 	}
 
@@ -129,5 +162,31 @@ public class CountryController {
 		}
 
 	}
+	/**
+     * This method writes byte array content into a file.
+     *
+     * @param fileName
+     * @param content
+     * @throws IOException
+     */
+    public static void writeByteArraysToFile(String fileName, byte[] content) throws IOException {
+ 
+        File file = new File(fileName);
+        BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(file));
+        writer.write(content);
+        writer.flush();
+        writer.close();
+ 
+    }
+    @GET
+    @Path("/get")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getFile() {
+        File file = new File("E:/arjun/image/LoginForm.zip");
+        ResponseBuilder response = Response.ok((Object) file);
+        String headerContent ="attachment; filename="+file.getName(); 
+        response.header("Content-Disposition", headerContent);
+        return response.build();
 
+    }
 }
