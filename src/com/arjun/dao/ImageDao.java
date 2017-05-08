@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.arjun.bean.ImageInfo;
 
 public class ImageDao {
@@ -49,7 +51,7 @@ public class ImageDao {
 	 * @throws SQLException
 	 */
 	public ImageInfo getImage(int IMAGE_KEY) throws SQLException {
-		String sql = "SELECT FROM image_info WHERE IMAGE_KEY =?";
+		String sql = "SELECT * FROM image_info WHERE IMAGE_KEY =?";
 		PreparedStatement preparedStatement;
 		ResultSet resultSet;
 		ImageInfo imageInfo = new ImageInfo();
@@ -62,7 +64,8 @@ public class ImageDao {
 			Blob blob = resultSet.getBlob("IMAGE_VALUE");
 			int blobLength = (int) blob.length();
 			byte[] blobAsBytes = blob.getBytes(1, blobLength);
-			imageInfo.setFileInput(blobAsBytes);
+			byte[] base64EncodedData = Base64.encodeBase64(blobAsBytes, true);
+			imageInfo.setFileInput(base64EncodedData);
 			// release the blob and free up memory. (since JDBC 4.0)
 			blob.free();
 		}

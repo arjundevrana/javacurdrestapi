@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ImageInfoResponce {
 	private String message;
-	private List<ImageInfo> imageInfos;
+	private List<byte[]> imageInfos;
 	private boolean status;
 
 	public String getMessage() {
@@ -19,11 +19,11 @@ public class ImageInfoResponce {
 		this.message = message;
 	}
 
-	public List<ImageInfo> getImageInfos() {
+	public List<byte[]> getImageInfos() {
 		return imageInfos;
 	}
 
-	public void setImageInfos(List<ImageInfo> imageInfos) {
+	public void setImageInfos(List<byte[]> imageInfos) {
 		this.imageInfos = imageInfos;
 	}
 

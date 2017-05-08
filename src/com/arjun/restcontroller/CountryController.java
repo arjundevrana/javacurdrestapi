@@ -107,7 +107,7 @@ public class CountryController {
 			@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
     	ImageInfo imageInfo = new ImageInfo();
-    	imageInfo.setIamgeId(1);
+    	imageInfo.setIamgeId(2);
     	byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
     	imageInfo.setFileInput(bytes);
     	ImageInfoResponce imageInfoResponce=	imageInfoservice.saveImage(imageInfo);
@@ -188,5 +188,11 @@ public class CountryController {
         response.header("Content-Disposition", headerContent);
         return response.build();
 
+    }
+    @GET
+    @Path("file/{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public ImageInfoResponce getUserImage(@PathParam("id") int id) {
+        return imageInfoservice.getImageInfo(id);
     }
 }

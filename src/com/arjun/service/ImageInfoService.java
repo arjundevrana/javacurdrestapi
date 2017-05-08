@@ -2,6 +2,8 @@ package com.arjun.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.arjun.bean.ImageInfo;
 import com.arjun.bean.ImageInfoResponce;
@@ -38,6 +40,26 @@ public class ImageInfoService {
 
 		}
 		return imageInfoResponce;
+	}
+	
+	public ImageInfoResponce getImageInfo(final int imageid){
+		ImageInfoResponce imageInfoResponce = new ImageInfoResponce();
+		List<byte[]> imageInfos = new ArrayList<>();
+		try{
+			ImageInfo imageInfo = imageDao.getImage(imageid);
+			imageInfoResponce.setMessage(null);
+			imageInfos.add(imageInfo.getFileInput());
+			imageInfoResponce.setImageInfos(imageInfos);;
+			imageInfoResponce.setStatus(true);
+		}catch(SQLException sqlException){
+			imageInfoResponce.setImageInfos(null);
+			imageInfoResponce.setMessage(" Error in data base fatch");
+			imageInfoResponce.setStatus(false);
+			return imageInfoResponce;	
+		}
+		
+		return imageInfoResponce;
+		
 	}
 
 }
