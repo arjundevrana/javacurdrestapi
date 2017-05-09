@@ -1,5 +1,7 @@
 package com.arjun.client;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -7,6 +9,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -26,6 +30,21 @@ public class ApiClient {
 	    country.setPopulation(1000012);
 	    System.out.println(addCountry(country));
 		System.out.println(findAllCountry().toString());
+		ImageInfoResponce imageInfoResponce = findAllInfoImage();
+		if(imageInfoResponce.isStatus()){
+			int count =0;
+			for(byte[] fileData:imageInfoResponce.getImageInfos()){
+				count++;
+				try {
+					FileUtils.writeByteArrayToFile(new File("E:/arjun/image/apires/"+count+".png"), Base64.decodeBase64(fileData));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}
+			
+		}
+		
 		System.out.println(findAllInfoImage().toString());
 
 	}
