@@ -9,16 +9,15 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import com.arjun.bean.APIResponse;
 import com.arjun.bean.Country;
+import com.arjun.bean.ImageInfoResponce;
 public class ApiClient {
 	public static void main(String[] args) {
 		Country country =  new Country();
@@ -27,6 +26,7 @@ public class ApiClient {
 	    country.setPopulation(1000012);
 	    System.out.println(addCountry(country));
 		System.out.println(findAllCountry().toString());
+		System.out.println(findAllInfoImage().toString());
 
 	}
    static APIResponse findAllCountry(){
@@ -134,4 +134,54 @@ public class ApiClient {
 		return apiResponse;
     	 
      }
+     
+     static ImageInfoResponce findAllInfoImage(){
+  	   @SuppressWarnings("deprecation")
+  		DefaultHttpClient httpClient = new DefaultHttpClient();
+  	 ImageInfoResponce apiResponse = null;
+  		    try
+  		    {
+  		        //Define a HttpGet request; You can choose between HttpPost, HttpDelete or HttpPut also.
+  		        //Choice depends on type of method you will be invoking.
+  		    	
+  		        HttpGet getRequest = new HttpGet("http://localhost:8080/JAXRRestCurdApi/rest/countries/file/1");
+  		         
+  		        //Set the API media type in http accept header
+  		        getRequest.addHeader("accept", "application/xml");
+  		          
+  		        //Send the request; It will immediately return the response in HttpResponse object
+  		        HttpResponse response = httpClient.execute(getRequest);
+  		         
+  		        //verify the valid error code first
+  		        int statusCode = response.getStatusLine().getStatusCode();
+  		        if (statusCode != 200) 
+  		        {
+  		            throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+  		        }
+  		         
+  		        //Now pull back the response object
+  		        HttpEntity httpEntity = response.getEntity();
+  		        String apiOutput = EntityUtils.toString(httpEntity);
+  		         
+  		        //Lets see what we got from API
+  		        System.out.println(apiOutput); //<user id="10"><firstName>demo</firstName><lastName>user</lastName></user>
+  		         
+  		        //In realtime programming, you will need to convert this http response to some java object to re-use it.
+  		        //Lets see how to jaxb unmarshal the api response content
+  		        JAXBContext jaxbContext = JAXBContext.newInstance(ImageInfoResponce.class);
+  		        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+  		        apiResponse = (ImageInfoResponce) jaxbUnmarshaller.unmarshal(new StringReader(apiOutput));
+  		         
+  		      
+  		    }catch( Exception e){
+  		    	e.printStackTrace();
+  		    }
+  		    finally
+  		    {
+  		        //Important: Close the connect
+  		        httpClient.getConnectionManager().shutdown();
+  		    }
+  		return apiResponse;
+  		   
+  	   }
 }
