@@ -195,4 +195,13 @@ public class CountryController {
     public ImageInfoResponce getUserImage(@PathParam("id") int id) {
         return imageInfoservice.getImageInfo(id);
     }
+    
+    @GET
+    @Path("video")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response video() {
+        File file = new File("C:/Users/NIC/Videos/demo.mp4");
+        return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+                .build();
+    }
 }
