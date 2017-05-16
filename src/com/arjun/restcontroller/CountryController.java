@@ -200,8 +200,10 @@ public class CountryController {
     @Path("video")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response video() {
-        File file = new File("C:/Users/NIC/Videos/demo.mp4");
-        return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
-                .build();
+        File file = new File("C:/Users/NIC/Videos/android.mp4");
+        ResponseBuilder response = Response.ok((Object) file);
+        String headerContent ="attachment; filename="+file.getName(); 
+        response.header("Content-Disposition", headerContent);
+        return response.build();
     }
 }

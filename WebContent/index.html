@@ -1,23 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rest API Demo</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 </head>
-<body>
-<h2>Welcome to Arjun rest API demo.</h2> 
-<h3> Provide Content-type: application/json in all API calls.</h3>
-<ol>
-<li> <h5> Find all country Get method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries</li>
-<li> <h5> Find all country in xml Get method </h5> http://localhost:8080/JAXRRestCurdApi/rest/countries/xml/</li>
-<li> <h5>Insert new country Post method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries
-<h6>Request parameter :-{"id":1(Int),"countryName":" England (string)","population":10000(int)}</h6>
-</li>
-<li> <h5> Update exist record Put method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries
-<h6>Request parameter :-{"id":1(Int),"countryName":" change country (string)","population":10000 change count(int)}</h6>
-</li>
-<li> <h5>Delete old record Delete method</h5> http://localhost:8080/JAXRRestCurdApi/rest/countries/4(record id)</li>
-</ol>
-<a href="fileUploadMultipart.jsp">File upload</a>
-</body>
+
+
+	<body>
+	<div class="container">
+		<div class="page-header">
+			<h2>Welcome to rest API demo.</h2>
+		</div>
+		<h3>Provide Content-type: application/json in all API calls.</h3>
+		<ol>
+			<li>
+				<h5>Find all country Get method</h5>
+				http://localhost:8080/JAXRRestCurdApi/rest/countries
+			</li>
+			<li>
+				<h5>Find all country in xml Get method</h5>
+				http://localhost:8080/JAXRRestCurdApi/rest/countries/xml/
+			</li>
+			<li>
+				<h5>Insert new country Post method</h5>
+				http://localhost:8080/JAXRRestCurdApi/rest/countries
+				<h6>Request parameter :-{"id":1(Int),"countryName":" England
+					(string)","population":10000(int)}</h6>
+			</li>
+			<li>
+				<h5>Update exist record Put method</h5>
+				http://localhost:8080/JAXRRestCurdApi/rest/countries
+				<h6>Request parameter :-{"id":1(Int),"countryName":" change
+					country (string)","population":10000 change count(int)}</h6>
+			</li>
+			<li>
+				<h5>Delete old record Delete method</h5>
+				http://localhost:8080/JAXRRestCurdApi/rest/countries/4(record id)
+			</li>
+			<li>
+				<h5>File Upload</h5>
+				<a href="fileUploadMultipart.jsp">Click here to file upload</a>
+			</li>
+		</ol>
+		
+
+
+		<video controls="controls" poster="image/anonymous-1200x779.jpg"
+			width="640" height="360">
+			<source
+				src="http://localhost:8080/JAXRRestCurdApi/rest/countries/video"
+				type="video/mp4" />
+			<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm"
+				type="video/webm" />
+			<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.ogv"
+				type="video/ogg" />
+			<img alt="Big Buck Bunny" src="image/anonymous-1200x779.jpg"
+				width="640" height="360"
+				title="No video playback capabilities, please download the video below" />
+		</video>
+		</div>
+	</body>
+
 </html>
